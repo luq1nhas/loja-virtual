@@ -1,15 +1,18 @@
 package com.dev.backend.entity;
 
 import java.util.Date;
+import java.util.List;
 
 import org.hibernate.validator.constraints.br.CPF;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -45,6 +48,9 @@ public class Pessoa {
   private String senha;
   private String endereco;
   private String cep;
+
+  @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<PermissaoPessoa> permissaoPessoas;
 
   @Temporal(TemporalType.TIMESTAMP)
   private Date dataCriacao;

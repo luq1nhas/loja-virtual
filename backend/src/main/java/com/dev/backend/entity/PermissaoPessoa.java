@@ -1,37 +1,39 @@
 package com.dev.backend.entity;
 
 import java.util.Date;
-import java.util.List;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import lombok.Data;
 
 @Entity
-@Table(name = "permissao")
+@Table(name = "permissao_pessoa", uniqueConstraints = {
+    @jakarta.persistence.UniqueConstraint(columnNames = { "idPessoa", "idPermissao" }) })
 @Data
-public class Permissao {
+public class PermissaoPessoa {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
-  private String nome;
+  @ManyToOne
+  @JoinColumn(name = "idPessoa")
+  private Pessoa pessoa;
 
-  @OneToMany(mappedBy = "permissao", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<PermissaoPessoa> permissaoPessoas;
+  @ManyToOne
+  @JoinColumn(name = "idPermissao")
+  private Permissao permissao;
 
   @Temporal(TemporalType.TIMESTAMP)
   private Date dataCriacao;
 
   @Temporal(TemporalType.TIMESTAMP)
   private Date dataAtualizacao;
-
 }
