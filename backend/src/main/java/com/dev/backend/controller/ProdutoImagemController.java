@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.dev.backend.entity.ProdutoImagem;
 import com.dev.backend.service.ProdutoImagemService;
@@ -23,14 +25,15 @@ public class ProdutoImagemController {
   @Autowired
   private ProdutoImagemService produtoImagemService;
 
+
   @GetMapping("/")
   public List<ProdutoImagem> obterTodos() {
     return produtoImagemService.obterTodos();
   }
 
   @PostMapping("/")
-  public ProdutoImagem inserir(@RequestBody ProdutoImagem produtoImagem) {
-    return produtoImagemService.inserir(produtoImagem);
+  public ProdutoImagem inserir(@RequestParam("idProduto") Long idProduto, @RequestParam("file") MultipartFile file) {
+    return produtoImagemService.inserir(idProduto, file);
   }
 
   @PutMapping("/")
